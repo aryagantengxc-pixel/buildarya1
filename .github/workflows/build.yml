@@ -720,7 +720,7 @@ jobs:
 
                       scrambleText(
                               buildText,
-                              "POWERED BY XSAT",
+                              "POWERED BY ARYA",
                               0,
                               () -> {
 
@@ -734,7 +734,7 @@ jobs:
 
                                       scrambleText(
                                               thanksText,
-                                              "THANK YOU FOR USING WEB2APK XSAT",
+                                              "THANK YOU FOR USING WEB2APK ARYA",
                                               0,
                                               () -> {
 
