@@ -720,7 +720,7 @@ jobs:
 
                       scrambleText(
                               buildText,
-                              "POWERED BY ARYA",
+                              "POWERED BY XSAT",
                               0,
                               () -> {
 
@@ -734,7 +734,7 @@ jobs:
 
                                       scrambleText(
                                               thanksText,
-                                              "THANK YOU FOR USING WEB2APK ARYA",
+                                              "THANK YOU FOR USING WEB2APK XSAT",
                                               0,
                                               () -> {
 
@@ -1681,17 +1681,14 @@ jobs:
           echo "flutter_version=$FLUTTER_VERSION" >> $GITHUB_OUTPUT
           echo "Using Flutter $FLUTTER_VERSION"
 
-      - name: Cache Gradle & pub dependencies
+      - name: Cache pub dependencies
         if: env.type == 'flutter'
         uses: actions/cache@v4
         with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-            ~/.pub-cache
-          key: ${{ runner.os }}-deps-${{ hashFiles('flutter-project/pubspec.lock', 'flutter-project/android/**/*.gradle*') }}
+          path: ~/.pub-cache
+          key: ${{ runner.os }}-pub-${{ hashFiles('flutter-project/pubspec.lock') }}
           restore-keys: |
-            ${{ runner.os }}-deps-
+            ${{ runner.os }}-pub-
 
       - name: Setup Flutter SDK
         if: env.type == 'flutter'
@@ -1700,6 +1697,14 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
           cache: true
+
+      # Official Gradle caching action - auto-detect gradlew di mana pun lokasinya,
+      # gak perlu tau struktur folder project (support semua base project).
+      - name: Setup Gradle (official caching)
+        if: env.type == 'flutter'
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-read-only: false
 
       - name: Speed up Gradle (parallel + build cache + heap)
         if: env.type == 'flutter'
